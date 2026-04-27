@@ -1,10 +1,12 @@
-# Jogurtová bábovka
+---
+kategorie: pečení
+počet porcí: 1 bábovka (forma o průměru 26 cm)
+doba přípravy: 20 min
+doba pečení: 45 min
+obtížnost: snadné
+---
 
-**Kategorie:** pečení
-**Počet porcí:** 1 bábovka (forma o průměru 26 cm)
-**Doba přípravy:** 20 min
-**Doba pečení:** 45 min
-**Obtížnost:** snadné
+# Jogurtová bábovka
 
 ## Suroviny
 

@@ -1,10 +1,12 @@
-# Nadýchaný hrnečkový perník
+---
+kategorie: pečení
+počet porcí: 1 plech 35×25 cm
+doba přípravy: 30 min
+doba pečení: 20 min
+obtížnost: snadné
+---
 
-**Kategorie:** pečení
-**Počet porcí:** 1 plech 35×25 cm
-**Doba přípravy:** 30 min
-**Doba vaření:** 20 min
-**Obtížnost:** snadné
+# Nadýchaný hrnečkový perník
 
 ## Suroviny
 
