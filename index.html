@@ -6,10 +6,71 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   <meta name="description" content="Osobní sbírka receptů">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  <style>
+    .recipe-check {
+      margin-right: 0.5em;
+      transform: translateY(1px);
+      cursor: pointer;
+    }
+    li.recipe-done {
+      text-decoration: line-through;
+      opacity: 0.55;
+    }
+  </style>
 </head>
 <body>
   <div id="app">Načítám…</div>
   <script>
+    function recipeChecklistPlugin(hook, vm) {
+      hook.doneEach(function () {
+        var content = document.querySelector('.markdown-section');
+        if (!content) return;
+        var path = vm.route.path || '';
+        ['Suroviny', 'Postup'].forEach(function (section) {
+          var heading = null;
+          content.querySelectorAll('h2').forEach(function (h) {
+            if (h.textContent.trim() === section) heading = h;
+          });
+          if (!heading) return;
+          var counter = 0;
+          var node = heading.nextElementSibling;
+          while (node && node.tagName !== 'H2') {
+            if (node.tagName === 'UL' || node.tagName === 'OL') {
+              counter = decorate(node, path, section, counter);
+            }
+            node = node.nextElementSibling;
+          }
+        });
+      });
+
+      function decorate(list, path, section, start) {
+        var items = list.children;
+        for (var i = 0; i < items.length; i++) {
+          var li = items[i];
+          if (li.querySelector(':scope > input.recipe-check')) continue;
+          var key = 'rc:' + path + ':' + section + ':' + (start + i);
+          var cb = document.createElement('input');
+          cb.type = 'checkbox';
+          cb.className = 'recipe-check';
+          cb.dataset.key = key;
+          cb.checked = sessionStorage.getItem(key) === '1';
+          if (cb.checked) li.classList.add('recipe-done');
+          cb.addEventListener('change', function () {
+            var parent = this.parentNode;
+            if (this.checked) {
+              sessionStorage.setItem(this.dataset.key, '1');
+              parent.classList.add('recipe-done');
+            } else {
+              sessionStorage.removeItem(this.dataset.key);
+              parent.classList.remove('recipe-done');
+            }
+          });
+          li.insertBefore(cb, li.firstChild);
+        }
+        return start + items.length;
+      }
+    }
+
     window.$docsify = {
       name: 'Recepty',
       repo: 'rutkodan/recepty',
@@ -22,6 +83,7 @@
         noData: 'Nic nenalezeno.',
         depth: 6,
       },
+      plugins: [recipeChecklistPlugin],
     }
   </script>
   <script src="https://cdn.jsdelivr.net/npm/docsify@4"></script>
