@@ -38,6 +38,10 @@
 4. Pečte zhruba 20 minut při 170 °C.
 5. Vychladlý perník potřete marmeládou, polijte čokoládovou polevou a posypte strouhaným kokosem.
 
+## Tipy
+
+- Po vylití těsta do formy pokapat rybízovou marmeládou — během pečení se rozteče do těsta a perník je díky tomu vláčnější.
+
 ## Zdroj
 
 - https://www.toprecepty.cz/recept/18981-nadychany-hrneckovy-pernik/
