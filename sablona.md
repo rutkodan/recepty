@@ -1,10 +1,12 @@
-# Název receptu
+---
+kategorie: hlavní jídlo / polévka / příloha / dezert / pečení / nápoj / ostatní
+počet porcí: 4
+doba přípravy: 20 min
+doba vaření: 40 min
+obtížnost: snadné / střední / náročné
+---
 
-**Kategorie:** hlavní jídlo / polévka / příloha / dezert / pečení / nápoj / ostatní
-**Počet porcí:** 4
-**Doba přípravy:** 20 min
-**Doba vaření:** 40 min
-**Obtížnost:** snadné / střední / náročné
+# Název receptu
 
 ## Suroviny
 

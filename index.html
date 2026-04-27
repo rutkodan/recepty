@@ -16,11 +16,53 @@
       text-decoration: line-through;
       opacity: 0.55;
     }
+    .recipe-meta {
+      margin: 0 0 1.5em 0;
+      border-collapse: collapse;
+    }
+    .recipe-meta th,
+    .recipe-meta td {
+      padding: 0.25em 0.75em 0.25em 0;
+      text-align: left;
+      border: none;
+      vertical-align: top;
+    }
+    .recipe-meta th {
+      font-weight: 600;
+      white-space: nowrap;
+      color: #5c6975;
+    }
   </style>
 </head>
 <body>
   <div id="app">Načítám…</div>
   <script>
+    function frontmatterPlugin(hook) {
+      hook.beforeEach(function (content) {
+        var match = content.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
+        if (!match) return content;
+        var rows = [];
+        match[1].split(/\r?\n/).forEach(function (line) {
+          var m = line.match(/^([^:]+):\s*(.*)$/);
+          if (!m) return;
+          var key = m[1].trim();
+          var value = m[2].trim().replace(/^["']|["']$/g, '');
+          if (key && value) rows.push([key, value]);
+        });
+        var rest = content.slice(match[0].length).replace(/^\r?\n+/, '');
+        if (!rows.length) return rest;
+        var table = '<table class="recipe-meta">\n';
+        rows.forEach(function (r) {
+          var label = r[0].charAt(0).toUpperCase() + r[0].slice(1);
+          table += '<tr><th>' + label + '</th><td>' + r[1] + '</td></tr>\n';
+        });
+        table += '</table>\n';
+        var h1 = rest.match(/^(#\s+[^\n]+\r?\n)/);
+        if (h1) return h1[1] + '\n' + table + '\n' + rest.slice(h1[1].length);
+        return table + '\n' + rest;
+      });
+    }
+
     function recipeChecklistPlugin(hook, vm) {
       hook.doneEach(function () {
         var content = document.querySelector('.markdown-section');
@@ -83,7 +125,7 @@
         noData: 'Nic nenalezeno.',
         depth: 6,
       },
-      plugins: [recipeChecklistPlugin],
+      plugins: [frontmatterPlugin, recipeChecklistPlugin],
     }
   </script>
   <script src="https://cdn.jsdelivr.net/npm/docsify@4"></script>
